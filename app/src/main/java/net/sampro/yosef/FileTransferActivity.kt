@@ -5,11 +5,14 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -53,6 +56,26 @@ class FileTransferActivity : AppCompatActivity() {
 
     private var fileUri: Uri? = null
 
+    private val selectFileLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) {
+
+            fileUri = uri
+//            fileNameWithExtension = File(uri.path.toString()).name
+//            fileNameWithExtension = filePath?.substringAfterLast("/")
+            fileNameWithExtension = getFileNameWithExtension(uri)
+//            var os = ByteArrayOutputStream()
+//            fileName = File(uri.path.toString()).nameWithoutExtension.removePrefix("primary:")
+            fileName = fileNameWithExtension?.substringBeforeLast(".")
+//            fileName = File(uri.path.toString()).nameWithoutExtension
+            fileExtension = fileNameWithExtension?.substringAfterLast(".")
+//            fileExtension = File(uri.path.toString()).extension
+//            Log.i(TAG,"Data: ${byteArray} and ${x}")
+            binding.autoCompleteSelectedFile.setText(fileNameWithExtension)
+
+//            Log.i("UPLOAD", "File Name With Extension: $fileNameWithExtension File Name: $fileName File Extension: $fileExtension")
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,17 +90,9 @@ class FileTransferActivity : AppCompatActivity() {
             title = "Transfer File"
         }
 
-        val selectFileLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            if (uri != null) {
-                fileUri = uri
-//            var os = ByteArrayOutputStream()
-                fileName = File(uri.path.toString()).nameWithoutExtension
-                fileExtension = File(uri.path.toString()).extension
-                fileNameWithExtension = File(uri.path.toString()).name
-//            Log.i(TAG,"Data: ${byteArray} and ${x}")
-                binding.autoCompleteSelectedFile.setText(fileNameWithExtension)
-            }
-        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
 
         usersList = mutableListOf()
 
@@ -117,15 +132,47 @@ class FileTransferActivity : AppCompatActivity() {
         getUsers()
     }
 
+    private fun getFileNameWithExtension(uri: Uri): String? {
+        var fileNameResult: String? = null
+
+        val scheme = uri.scheme
+
+        if (scheme == "content") {
+            val cursor = contentResolver.query(uri, null, null, null)
+
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    val columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    fileNameResult = cursor.getString(columnIndex)
+                }
+            } finally {
+                cursor?.close()
+            }
+        } else {
+//            val filePath = uri.path?.substringAfter(":")
+            val filePath = uri.path
+            fileNameResult = filePath?.substringAfterLast("/")
+        }
+
+        return fileNameResult
+    }
+
     @SuppressLint("SetTextI18n")
     private suspend fun uploadFile() {
         withContext(Dispatchers.Main) {
             binding.textViewStatus.text = "Uploading File..."
-            binding.clLoadingDataTransfer.visibility = View.VISIBLE
+            //binding.clLoadingDataTransfer.visibility = View.VISIBLE
         }
         val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
         val dateNow = Date()
-        fileNameToUpload = "$fileName-${formatter.format(dateNow)}.$fileExtension"
+
+        fileNameToUpload = if (fileName == fileExtension) {
+            "$fileName-${formatter.format(dateNow)}"
+        } else {
+            "$fileName-${formatter.format(dateNow)}.$fileExtension"
+        }
+
+        Log.i("UPLOAD", "File Upload Name: $fileNameToUpload File Name: $fileName File Extension: $fileExtension")
 
         val file = storage.child("sharedfiles/$fileNameToUpload")
 
@@ -235,5 +282,14 @@ class FileTransferActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

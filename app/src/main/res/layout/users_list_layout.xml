@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvUserNameDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="2dp"
+                android:text="User Name:"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="yosef"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toEndOf="@+id/tvUserNameDesc"
+                app:layout_constraintTop_toTopOf="@+id/tvUserNameDesc"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tvPasswordDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Password:"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toStartOf="@+id/tvUserNameDesc"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserNameDesc"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tvPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="88772232"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toEndOf="@+id/tvPasswordDesc"
+                app:layout_constraintTop_toTopOf="@+id/tvPasswordDesc"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tvUserTypeDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Type:"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toStartOf="@+id/tvPasswordDesc"
+                app:layout_constraintTop_toBottomOf="@+id/tvPasswordDesc" />
+
+            <TextView
+                android:id="@+id/tvUserType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="SuperAdmin"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toEndOf="@+id/tvUserTypeDesc"
+                app:layout_constraintTop_toTopOf="@+id/tvUserTypeDesc" />
+
+            <Button
+                android:id="@+id/btnChangePassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="4dp"
+                android:text="Change Password"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnDeleteUser"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserType"
+                tools:ignore="HardcodedText,TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/btnDeleteUser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="4dp"
+                android:text="Delete"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="@+id/btnChangePassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnChangePassword"
+                app:layout_constraintTop_toTopOf="@+id/btnChangePassword"
+                tools:ignore="HardcodedText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

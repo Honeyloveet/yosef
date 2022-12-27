@@ -19,6 +19,20 @@
         android:theme="@style/Theme.Yosef"
         tools:targetApi="31">
         <activity
+            android:name=".AddUserActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UsersActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".FileTransferListActivity"
             android:exported="false">
             <meta-data

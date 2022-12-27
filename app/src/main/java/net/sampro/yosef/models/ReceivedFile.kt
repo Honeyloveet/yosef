@@ -17,3 +17,34 @@ data class ReceivedFileAdd(
 data class ReceivedFileGet(
     var received_at: Long? = null
 ) : ReceivedFileBase()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
