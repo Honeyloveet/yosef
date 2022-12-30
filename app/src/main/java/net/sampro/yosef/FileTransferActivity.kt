@@ -138,7 +138,7 @@ class FileTransferActivity : AppCompatActivity() {
         val scheme = uri.scheme
 
         if (scheme == "content") {
-            val cursor = contentResolver.query(uri, null, null, null)
+            val cursor = contentResolver.query(uri, null, null, null, null)
 
             try {
                 if (cursor != null && cursor.moveToFirst()) {
