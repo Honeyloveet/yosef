@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvFileNameDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="2dp"
+                android:text="File Name:"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvFileName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="design-01.pdf"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvFileNameDesc"
+                app:layout_constraintTop_toTopOf="@+id/tvFileNameDesc" />
+
+            <TextView
+                android:id="@+id/tvFromDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="From:"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toStartOf="@+id/tvFileNameDesc"
+                app:layout_constraintTop_toTopOf="@+id/tvFrom" />
+
+            <TextView
+                android:id="@+id/tvFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:text="Zelalem Getaneh"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toEndOf="@+id/tvFromDesc"
+                app:layout_constraintTop_toBottomOf="@+id/tvFileName" />
+
+            <TextView
+                android:id="@+id/tvToDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="To:"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toStartOf="@+id/tvFromDesc"
+                app:layout_constraintTop_toBottomOf="@+id/tvFromDesc" />
+
+            <TextView
+                android:id="@+id/tvTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Zelalem Getaneh"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toEndOf="@+id/tvToDesc"
+                app:layout_constraintTop_toTopOf="@+id/tvToDesc" />
+
+            <TextView
+                android:id="@+id/tvApproverDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Approver:"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toStartOf="@+id/tvToDesc"
+                app:layout_constraintTop_toBottomOf="@+id/tvToDesc" />
+
+            <TextView
+                android:id="@+id/tvApprover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Zelalem Getaneh"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toEndOf="@+id/tvApproverDesc"
+                app:layout_constraintTop_toTopOf="@+id/tvApproverDesc" />
+
+            <TextView
+                android:id="@+id/tvStatusDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Status:"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintStart_toStartOf="@+id/tvApproverDesc"
+                app:layout_constraintTop_toBottomOf="@+id/tvApproverDesc" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Pending"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintBottom_toBottomOf="@+id/tvStatusDesc"
+                app:layout_constraintStart_toEndOf="@+id/tvStatusDesc"
+                app:layout_constraintTop_toTopOf="@+id/tvStatusDesc" />
+
+            <Button
+                android:id="@+id/btnApprove"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="4dp"
+                android:text="Approve"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnDownload"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStatusDesc"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/btnDownload"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="4dp"
+                android:text="Download"
+                app:layout_constraintBottom_toBottomOf="@+id/btnApprove"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnApprove"
+                app:layout_constraintTop_toTopOf="@+id/btnApprove" />
+
+            <TextView
+                android:id="@+id/tvDateSent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="4dp"
+                android:text="11-12-2022"
+                android:textAlignment="center"
+                android:textSize="@dimen/dataItemSizeOne"
+                app:layout_constraintBottom_toTopOf="@+id/btnDownload"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
