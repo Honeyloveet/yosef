@@ -1,12 +1,14 @@
 package net.sampro.yosef
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
@@ -14,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -90,9 +93,7 @@ class FileTransferActivity : AppCompatActivity() {
             title = "Transfer File"
         }
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         usersList = mutableListOf()
 
@@ -161,9 +162,9 @@ class FileTransferActivity : AppCompatActivity() {
     private suspend fun uploadFile() {
         withContext(Dispatchers.Main) {
             binding.textViewStatus.text = "Uploading File..."
-            //binding.clLoadingDataTransfer.visibility = View.VISIBLE
+            binding.clLoadingDataTransfer.visibility = View.VISIBLE
         }
-        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm", Locale.getDefault())
         val dateNow = Date()
 
         fileNameToUpload = if (fileName == fileExtension) {
@@ -286,10 +287,30 @@ class FileTransferActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
+            R.id.menuItemSentFilesList -> {
+                val intent = Intent(this, FileTransferListActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.menuItemUsers -> {
+                val intent = Intent(this, UsersActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.menuItemDownloads -> {
+                val intent = Intent(this, DownloadedFilesActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.menuItemLogOut -> {
+                FirebaseAuth.getInstance().signOut()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                this.finish()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
     }
 }

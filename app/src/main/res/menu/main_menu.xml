@@ -3,15 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:title="Send File"
-        android:id="@+id/menuItemSend"
-        android:icon="@drawable/ic_send_24"
-        app:showAsAction="ifRoom"
+        android:title="Sent Files List"
+        android:id="@+id/menuItemSentFilesList"
         tools:ignore="HardcodedText" />
 
     <item
         android:id="@+id/menuItemUsers"
         android:title="Users"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/menuItemDownloads"
+        android:title="Downloads"
         app:showAsAction="never"
         tools:ignore="HardcodedText" />
 

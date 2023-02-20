@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
                         LoggedInUser.email = firebaseAuth.currentUser?.email ?: "No Email"
                         LoggedInUser.type = "To be implemented"
 
-                        val intent = Intent(this, FileTransferListActivity::class.java)
+                        val intent = Intent(this, FileTransferActivity::class.java)
                         startActivity(intent)
 
                         this.finish()
@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
             LoggedInUser.email = firebaseAuth.currentUser?.email ?: "No Email"
             LoggedInUser.type = "To be implemented"
 
-            val intent = Intent(this, FileTransferListActivity::class.java)
+            val intent = Intent(this, FileTransferActivity::class.java)
             startActivity(intent)
             this.finish()
         }

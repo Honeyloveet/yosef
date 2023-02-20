@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Yosef"
         tools:targetApi="31">
         <activity
+            android:name=".DownloadedFilesActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddUserActivity"
             android:exported="false">
             <meta-data
@@ -59,6 +62,23 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="http" />
+        </intent>
+    </queries>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,19 +16,25 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.sampro.yosef.adapters.FileTransferListAdapter
 import net.sampro.yosef.databinding.ActivityFileTransferListBinding
 import net.sampro.yosef.models.ReceivedFileGet
+import net.sampro.yosef.utils.Constants.FILE_OUT_PUT_DIR
 import net.sampro.yosef.utils.LoggedInUser
+import java.io.File
 
 class FileTransferListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFileTransferListBinding
 
     private lateinit var dbReference: FirebaseDatabase
+
+    private lateinit var storage: FirebaseStorage
 
     private lateinit var filesList: MutableList<ReceivedFileGet>
     private lateinit var filesAdapter: FileTransferListAdapter
@@ -40,6 +47,10 @@ class FileTransferListActivity : AppCompatActivity() {
         supportActionBar?.apply {
             title = "File Transfers"
         }
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        storage = FirebaseStorage.getInstance()
 
         filesList = mutableListOf()
         dbReference = FirebaseDatabase.getInstance()
@@ -55,7 +66,23 @@ class FileTransferListActivity : AppCompatActivity() {
 
         filesAdapter.setOnItemClickListener(object : FileTransferListAdapter.OnItemClickListener {
             override fun onDownloadClick(position: Int) {
-                Toast.makeText(this@FileTransferListActivity, "Download Clicked.", Toast.LENGTH_SHORT).show()
+
+                val outPutDir = File(applicationContext.filesDir, FILE_OUT_PUT_DIR)
+
+                if (!outPutDir.exists()) {
+                    outPutDir.mkdir()
+                }
+
+                val outPutFile = File(outPutDir, filesList[position].file_name!!)
+
+                if (!outPutFile.exists()) {
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        downloadFile(position, outPutFile)
+                    }
+                } else {
+                    Toast.makeText(this@FileTransferListActivity, "File already exists.", Toast.LENGTH_SHORT).show()
+                }
+
             }
 
             override fun onApproveClick(position: Int) {
@@ -140,6 +167,34 @@ class FileTransferListActivity : AppCompatActivity() {
         })
     }
 
+    private suspend fun downloadFile(filePosition: Int, fileOutPut: File) {
+        withContext(Dispatchers.Main) {
+            binding.textViewStatus.text = "Downloading..."
+            binding.clLoadingFileTransfer.visibility = View.VISIBLE
+        }
+        val fileUrl = filesList[filePosition].file_url.toString()
+        val fileUrlReference = storage.getReferenceFromUrl(fileUrl)
+        val fileSizeLimit: Long = (1024 * 1024) * 50
+        fileUrlReference.getBytes(fileSizeLimit).addOnSuccessListener {
+            saveDownloadedFile(it, fileOutPut)
+        }.addOnFailureListener {
+            Toast.makeText(this@FileTransferListActivity,"File Download Failed!!!.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveDownloadedFile(fileToSave: ByteArray, fileOutPut: File) {
+        fileOutPut.writeBytes(fileToSave)
+//        withContext(Dispatchers.Main) {
+//            binding.clLoadingFileTransfer.visibility = View.GONE
+//            binding.textViewStatus.text = "Loading..."
+//            Toast.makeText(this@FileTransferListActivity,"File Downloaded Successfully.", Toast.LENGTH_SHORT).show()
+//        }
+        binding.clLoadingFileTransfer.visibility = View.GONE
+        binding.textViewStatus.text = "Loading..."
+        Toast.makeText(this@FileTransferListActivity,"File Downloaded Successfully.", Toast.LENGTH_SHORT).show()
+
+    }
+
     private fun setupRecyclerView() {
         filesAdapter = FileTransferListAdapter()
         binding.rvFileTrfList.apply {
@@ -151,26 +206,10 @@ class FileTransferListActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuItemSend -> {
-                val intent = Intent(this, FileTransferActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.menuItemUsers -> {
-                val intent = Intent(this, UsersActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.menuItemLogOut -> {
-                FirebaseAuth.getInstance().signOut()
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                this.finish()
+            android.R.id.home -> {
+                onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
     }
 }
