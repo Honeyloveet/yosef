@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -96,11 +95,11 @@ class UsersActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         alertDialog.setPositiveButton("Save") { dialog, which ->
-            if (input.text.toString().isNotEmpty()) {
+            if (input.text.toString().isNotEmpty() && input.text.toString().length < 7) {
                 dialog.dismiss()
                 changePassword(position, input.text.toString())
             } else {
-                Toast.makeText(this@UsersActivity, "Please Enter New Password.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@UsersActivity, "Password cannot be less than 7 characters", Toast.LENGTH_SHORT).show()
             }
         }
 
