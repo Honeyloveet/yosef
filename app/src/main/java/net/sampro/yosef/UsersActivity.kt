@@ -68,18 +68,6 @@ class UsersActivity : AppCompatActivity() {
 
         userAdapter.setOnItemClickListener(object : UsersAdapter.OnItemClickListener {
             override fun onChangePasswordClick(position: Int) {
-//                val loginEmail = usersList[position].email.toString()
-//                val loginPassword = usersList[position].password.toString()
-//                firebaseAuth.signOut()
-//                firebaseAuth.signInWithEmailAndPassword(loginEmail, loginPassword)
-//                    .addOnCompleteListener {
-//                        if (it.isSuccessful) {
-//                            firebaseAuth.signOut()
-//                        } else {
-//                            Toast.makeText(this@UsersActivity, "Password Change Failed!!.", Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                Toast.makeText(this@UsersActivity, "Change Password Clicked.", Toast.LENGTH_SHORT).show()
                 showChangePasswordDialog(position)
             }
 
