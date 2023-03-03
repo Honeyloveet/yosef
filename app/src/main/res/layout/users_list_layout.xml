@@ -88,13 +88,13 @@
                 app:layout_constraintTop_toTopOf="@+id/tvUserTypeDesc" />
 
             <Button
-                android:id="@+id/btnChangePassword"
+                android:id="@+id/btnViewUser"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="4dp"
-                android:text="Change Password"
+                android:text="View"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnDeleteUser"
@@ -105,17 +105,20 @@
 
             <Button
                 android:id="@+id/btnDeleteUser"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="4dp"
+                android:backgroundTint="#FF5A5A"
                 android:text="Delete"
                 android:textAllCaps="false"
-                app:layout_constraintBottom_toBottomOf="@+id/btnChangePassword"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/btnViewUser"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btnChangePassword"
-                app:layout_constraintTop_toTopOf="@+id/btnChangePassword"
+                app:layout_constraintStart_toEndOf="@+id/btnViewUser"
+                app:layout_constraintTop_toTopOf="@+id/btnViewUser"
                 tools:ignore="HardcodedText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

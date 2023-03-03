@@ -46,6 +46,8 @@ class FileTransferActivity : AppCompatActivity() {
 
     private lateinit var storage: StorageReference
 
+    private lateinit var firebaseAuth: FirebaseAuth
+
     private lateinit var usersList: MutableList<UserGet>
     private val usersArray = arrayListOf<String>()
 
@@ -89,6 +91,8 @@ class FileTransferActivity : AppCompatActivity() {
 
         storage = FirebaseStorage.getInstance().reference
 
+        firebaseAuth = FirebaseAuth.getInstance()
+
         supportActionBar?.apply {
             title = "Transfer File"
         }
@@ -103,6 +107,8 @@ class FileTransferActivity : AppCompatActivity() {
         checkPermissions()
 
         dbReference = FirebaseDatabase.getInstance()
+
+        binding.tvConnectionStatus.text = "Logged in user: ${firebaseAuth.currentUser?.displayName}"
 
         binding.btnTransferFile.setOnClickListener {
 

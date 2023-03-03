@@ -13,7 +13,7 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
     private lateinit var clickListener : OnItemClickListener
 
     interface OnItemClickListener {
-        fun onChangePasswordClick(position: Int)
+        fun onViewUserClick(position: Int)
         fun onDeleteUserClick(position: Int)
     }
 
@@ -24,8 +24,8 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
     inner class UsersViewHolder(val binding: UsersListLayoutBinding, listener: OnItemClickListener) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.apply {
-                btnChangePassword.setOnClickListener {
-                    listener.onChangePasswordClick(adapterPosition)
+                btnViewUser.setOnClickListener {
+                    listener.onViewUserClick(adapterPosition)
                 }
                 btnDeleteUser.setOnClickListener {
                     listener.onDeleteUserClick(adapterPosition)
@@ -40,7 +40,7 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
         }
 
         override fun areContentsTheSame(oldItem: UserGet, newItem: UserGet): Boolean {
-            return oldItem == newItem
+            return oldItem.type == newItem.type && oldItem.password == newItem.password
         }
 
     }
